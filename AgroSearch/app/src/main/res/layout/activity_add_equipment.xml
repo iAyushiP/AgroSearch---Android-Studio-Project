@@ -39,6 +39,7 @@
             android:paddingStart="5dp"
             android:paddingTop="20dp"
             android:paddingBottom="15dp"
+            android:textColor="#ffffff"
             android:textColorHint="#ffffff"
             android:textSize="15sp" />
 
@@ -81,6 +82,7 @@
 
 
         <EditText
+            android:id="@+id/EquipmentRate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -125,4 +127,3 @@
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
-
