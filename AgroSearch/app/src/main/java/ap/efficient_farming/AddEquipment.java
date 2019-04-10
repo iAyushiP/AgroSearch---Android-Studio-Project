@@ -18,32 +18,32 @@ import android.widget.Spinner;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class AddEquipment extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddEquipment extends AppCompatActivity //implements AdapterView.OnItemSelectedListener
+        {
     private Spinner spinnerType, spinnerMode;
     private String IMAGE_SELECTED="IMAGE SELECTED";
     public static final int GET_FROM_GALLERY = 3;
-    private static final String[] type = {"Tractor", "Baler", "Combine", "Plow","Mower","Planter","Sprayer"};
-    private static final String[] mode = {"per hour","per day","per week","per month", "per hectare"};
-    Button UploadImage;
+    private static final String[] type = {"Vehicles", "Irrigation Equipment", "Cultivation Tools", "Fertilization Tools","Consumables","Pest Control"};
+    private static final String[] mode = {"per hour","per day","per week","per month"};
+    Button UploadImage, RegisterButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getSupportActionBar().hide();
-        this.getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );*/
         setContentView(R.layout.activity_add_equipment);
-        spinnerType = (Spinner) findViewById(R.id.typeSpinner);
-        spinnerMode = (Spinner) findViewById(R.id.SpinnerMode);
-        UploadImage = (Button) findViewById(R.id.UploadImage);
+        spinnerType = findViewById(R.id.typeSpinner);
+        spinnerMode = findViewById(R.id.SpinnerMode);
+        UploadImage = findViewById(R.id.UploadImage);
+        RegisterButton = findViewById(R.id.RegisterEquipment);
+        RegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddNewEquipment();
+            }
+        });
         UploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-
             }
         });
         ArrayAdapter<String> adapterType = new ArrayAdapter<String>(this,
@@ -55,10 +55,10 @@ public class AddEquipment extends AppCompatActivity implements AdapterView.OnIte
         spinnerMode.setAdapter(adapterMode);
         spinnerType.setSelection(0);
         spinnerMode.setSelection(0);
-        spinnerType.setOnItemSelectedListener(this);
-        spinnerMode.setOnItemSelectedListener(this);
+        //spinnerType.setOnItemSelectedListener(this);
+        //spinnerMode.setOnItemSelectedListener(this);
             }
-    @Override
+    /*@Override
     public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 
         switch (position) {
@@ -88,12 +88,10 @@ public class AddEquipment extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         // TODO Auto-generated method stub
-    }
+    }*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-
         //Detects request codes
         if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
@@ -109,5 +107,8 @@ public class AddEquipment extends AppCompatActivity implements AdapterView.OnIte
                 e.printStackTrace();
             }
         }
+    }
+    protected void AddNewEquipment() {
+
     }
 }
