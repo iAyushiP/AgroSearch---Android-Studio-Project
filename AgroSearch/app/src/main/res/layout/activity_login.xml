@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="302dp"
-        android:layout_height="360dp"
+        android:layout_height="wrap_content"
 
         android:layout_marginStart="68dp"
         android:layout_marginLeft="68dp"
@@ -70,7 +70,7 @@
             android:textColor="#ffffff"
             android:textStyle="normal" />
 
-        <Button
+        <!--<Button
             android:id="@+id/BForgotPassword"
             android:layout_width="190dp"
             android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
             android:padding="20dp"
             android:text="FORGOT PASSWORD"
             android:textColor="#ffffff"
-            android:textStyle="normal" />
+            android:textStyle="normal" />-->
 
     </LinearLayout>
 
@@ -100,20 +100,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="AgroSearch Logo" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.456" />
 </android.support.constraint.ConstraintLayout>
