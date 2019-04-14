@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -19,6 +21,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -45,16 +48,16 @@ public class AddEquipment extends AppCompatActivity //implements AdapterView.OnI
     EditText ETitle, EDesc, ERate;
     Button UploadImage, RegisterButton,availableFrom,availableTo;
     public static final int GET_FROM_GALLERY = 3;
-    private static final String[] type = {"Vehicles", "Irrigation Equipment", "Cultivation Tools", "Fertilization Tools","Consumables","Pest Control"};
-    private static final String[] mode = {"Hour","Day","Week","Month"};
-    private static final String[] list={"Share","Rent","Sell"};
-    private static final String[] AdType={"Normal","Featured","Boosted"};
+    private static final String[] type = {"Select the equipment type..","Vehicles", "Irrigation Equipment", "Cultivation Tools", "Fertilization Tools","Consumables","Pest Control"};
+    private static final String[] mode = {"Select pricing mode","per hour","per day","per week","per month"};
+    private static final String[] list={"Select listing type..","Share","Rent","Sell"};
+    private static final String[] AdType={"Select Ad type..","Normal","Featured","Boosted"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_equipment);
-        availableFrom=(Button)findViewById(R.id.AvailableFrom);
-        availableTo=(Button)findViewById(R.id.AvailableTo);
+        availableFrom = (Button) findViewById(R.id.AvailableFrom);
+        availableTo = (Button) findViewById(R.id.AvailableTo);
         ETitle = findViewById(R.id.EquipmentTitle);
         EDesc = findViewById(R.id.EquipmentDesc);
         ERate = findViewById(R.id.EquipmentRate);
@@ -67,34 +70,34 @@ public class AddEquipment extends AppCompatActivity //implements AdapterView.OnI
         availableFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                calendar1=Calendar.getInstance();
-                fyear=calendar1.get(Calendar.YEAR);
-                fmonth=calendar1.get(Calendar.MONTH);
-                fday=calendar1.get(Calendar.DAY_OF_MONTH);
-                datePickerDialog1=new DatePickerDialog(AddEquipment.this,
+                calendar1 = Calendar.getInstance();
+                fyear = calendar1.get(Calendar.YEAR);
+                fmonth = calendar1.get(Calendar.MONTH);
+                fday = calendar1.get(Calendar.DAY_OF_MONTH);
+                datePickerDialog1 = new DatePickerDialog(AddEquipment.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                                availableFrom.setText(day+"/"+(month+1)+"/"+year);
+                                availableFrom.setText(day + "/" + (month + 1) + "/" + year);
                             }
-                        },0,0,0);
-          datePickerDialog1.show();
+                        }, 0, 0, 0);
+                datePickerDialog1.show();
             }
         });
         availableTo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                calendar2=Calendar.getInstance();
-                tyear=calendar2.get(Calendar.YEAR);
-                tmonth=calendar2.get(Calendar.MONTH);
-                tday=calendar2.get(Calendar.DAY_OF_MONTH);
-                datePickerDialog2=new DatePickerDialog(AddEquipment.this,
+                calendar2 = Calendar.getInstance();
+                tyear = calendar2.get(Calendar.YEAR);
+                tmonth = calendar2.get(Calendar.MONTH);
+                tday = calendar2.get(Calendar.DAY_OF_MONTH);
+                datePickerDialog2 = new DatePickerDialog(AddEquipment.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                                availableFrom.setText(day+"/"+(month+1)+"/"+year);
+                                availableFrom.setText(day + "/" + (month + 1) + "/" + year);
                             }
-                        },0,0,0);
+                        }, 0, 0, 0);
                 datePickerDialog2.show();
             }
         });
@@ -110,14 +113,83 @@ public class AddEquipment extends AppCompatActivity //implements AdapterView.OnI
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
             }
         });
+        //Coding for spinner items
         ArrayAdapter<String> adapterType = new ArrayAdapter<String>(this,
-                R.layout.spinner_item, type);
+                R.layout.spinner_item, type) {
+            @Override
+            public boolean isEnabled(int position) {
+                if (position == 0) return false; //disable the first item on spinner
+                else return true;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (position == 0) {
+                    //set the hint color as gray
+                    tv.setTextColor(Color.GRAY);
+                } else tv.setTextColor(Color.BLACK);
+                return view;
+            }
+        };
         ArrayAdapter<String> adapterMode = new ArrayAdapter<String>(this,
-                R.layout.spinner_item, mode);
+                R.layout.spinner_item, mode) {
+                @Override
+                public boolean isEnabled(int position) {
+                if (position == 0) return false; //disable the first item on spinner
+                else return true;
+            }
+
+                @Override
+                public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (position == 0) {
+                    //set the hint color as gray
+                    tv.setTextColor(Color.GRAY);
+                } else tv.setTextColor(Color.BLACK);
+                return view;
+            }
+        };
         ArrayAdapter<String> adapterList = new ArrayAdapter<String>(this,
-                R.layout.spinner_item, list);
+                R.layout.spinner_item, list) {
+            @Override
+            public boolean isEnabled(int position) {
+                if (position == 0) return false; //disable the first item on spinner
+                else return true;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (position == 0) {
+                    //set the hint color as gray
+                    tv.setTextColor(Color.GRAY);
+                } else tv.setTextColor(Color.BLACK);
+                return view;
+            }
+        };
         ArrayAdapter<String> adapterAdType = new ArrayAdapter<String>(this,
-                R.layout.spinner_item, AdType);
+                R.layout.spinner_item, AdType) {
+            @Override
+            public boolean isEnabled(int position) {
+                if (position == 0) return false; //disable the first item on spinner
+                else return true;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (position == 0) {
+                    //set the hint color as gray
+                    tv.setTextColor(Color.GRAY);
+                } else tv.setTextColor(Color.BLACK);
+                return view;
+            }
+        };
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapterMode.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapterList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -164,6 +236,7 @@ public class AddEquipment extends AppCompatActivity //implements AdapterView.OnI
     public void onNothingSelected(AdapterView<?> parent) {
         // TODO Auto-generated method stub
     }*/
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

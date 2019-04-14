@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,16 +7,17 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="370dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="35dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/transparent"
         android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
 
         <TextView
             android:id="@+id/textView"
@@ -27,7 +27,7 @@
             android:layout_marginBottom="5dp"
             android:gravity="center"
             android:text="ADD EQUIPMENT"
-            android:textColor="#80ffffff"
+            android:textColor="#85ffffff"
             android:textSize="20sp" />
 
         <EditText
@@ -43,71 +43,55 @@
             android:textColorHint="#ffffff"
             android:textSize="15sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:paddingStart="5dp"
-                android:text="Equipment Type:"
-                android:textColor="#ffffff"
-                android:textSize="15sp" />
-
             <Spinner
                 android:id="@+id/typeSpinner"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"></Spinner>
-        </LinearLayout>
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"></Spinner>
 
         <LinearLayout
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp">
 
             <Button
                 android:id="@+id/AvailableFrom"
-                android:layout_width="130dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="8dp"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
                 android:background="@drawable/button2"
+                android:padding="10dp"
                 android:text="Available From"
                 android:textColor="#ffffff"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
 
             <Button
                 android:id="@+id/AvailableTo"
-                android:layout_width="130dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="8dp"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
                 android:background="@drawable/button2"
+                android:padding="10dp"
+                android:layout_marginLeft="15dp"
                 android:text="Available To"
                 android:textColor="#ffffff"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <Spinner
             android:id="@+id/SpinnerList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="10dp">
-        </Spinner>
+            android:layout_marginTop="10dp"
+            android:padding="10dp"></Spinner>
 
         <Spinner
             android:id="@+id/SpinnerAdType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="10dp">
-        </Spinner>
+            android:layout_marginTop="5dp"
+            android:padding="10dp"></Spinner>
 
         <EditText
             android:id="@+id/EquipmentDesc"
@@ -117,9 +101,12 @@
             android:background="@drawable/white_solid"
             android:gravity="top|start"
             android:hint="Description"
-            android:inputType="textLongMessage"
+            android:inputType="textLongMessage|textMultiLine"
+            android:maxLength="2000"
+            android:scrollHorizontally="false"
             android:paddingStart="5dp"
             android:paddingTop="5dp"
+            android:singleLine="false"
             android:scrollIndicators="end|right"
             android:scrollbars="vertical"
             android:textSize="15sp" />
@@ -129,8 +116,8 @@
             android:id="@+id/EquipmentRate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:hint="Enter Rate (Select Mode Below)"
+            android:layout_margin="10dp"
+            android:hint="Enter rate"
             android:padding="10dp"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"
@@ -140,7 +127,7 @@
             android:id="@+id/SpinnerMode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginTop="5dp"
             android:padding="10dp"></Spinner>
 
         <Button
@@ -149,7 +136,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="UPLOAD IMAGE"
-            android:textColor="#80101010"
+            android:background="@drawable/login_button"
+            android:textColor="#ffffff"
             android:textSize="15sp" />
 
         <Button
