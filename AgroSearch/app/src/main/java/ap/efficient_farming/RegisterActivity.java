@@ -1,4 +1,5 @@
 package ap.efficient_farming;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,23 +12,20 @@ import android.widget.Toast;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
     Button RegisterButton;
     URLs URLObject = new URLs();
     String BASE_URL = URLObject.URL_REGISTER;
-    ArrayList<User> mUserDataList = new ArrayList<>();
+    private ProgressDialog pDialog;
+    private SessionHandler session;
     AutoCompleteTextView UserName, UserPhone, UserP, UserC;
-    //int NumberOfRequestsCompleted;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        session = new SessionHandler(getApplicationContext());
         setContentView(R.layout.activity_register);
         UserName = findViewById(R.id.userName);
         UserPhone = findViewById(R.id.userNumber);
@@ -88,13 +86,24 @@ public class RegisterActivity extends AppCompatActivity {
         if(password.length()<6) return true;
         return false;
     }
+
+    private void displayLoader() {
+        pDialog = new ProgressDialog(RegisterActivity.this);
+        pDialog.setMessage("Signing Up.. Please wait...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+    }
+
     private void RegisterUser() {
+        displayLoader();
         try {
             HashMap<String, String> param = new HashMap<>();
-            param.put("name", UserName.getText().toString());
-            param.put("phone", UserPhone.getText().toString());
-            param.put("c_password", UserP.getText().toString());
-            param.put("password", UserC.getText().toString());
+            param.put("name", UserName.getText().toString().trim());
+            param.put("phone", UserPhone.getText().toString().trim());
+            param.put("c_password", UserP.getText().toString().trim());
+            param.put("password", UserC.getText().toString().trim());
 
             AQuery aq = new AQuery(this);
 
@@ -103,24 +112,27 @@ public class RegisterActivity extends AppCompatActivity {
                 public void callback(String url, JSONObject json, AjaxStatus status) {
                     super.callback(url, json, status);
 
-                    Log.v("CALLBACK RECEIVED" , String.valueOf(json) + status);
-
+                    Log.v("CALLBACK RECEIVED" , String.valueOf(json) );
+                    JSONObject jsonObject;
                     try {
                         if (json != null) {
-                            JSONObject h = json.getJSONObject("success");
-
-                            Log.v("SUCCESS" ,h.getString("token") );
+                            jsonObject = json.getJSONObject("success");
+                            String token = jsonObject.getString("token");
+                            Log.v("SUCCESS", "TOKEN GENERATED");
+                            pDialog.dismiss();
                             Toast.makeText(RegisterActivity.this, "You've been successfully registered!", Toast.LENGTH_LONG).show();
+                            session.loginUser(UserPhone.getText().toString().trim(),UserName.getText().toString().trim(), token);
                             mainActivity();
                         } else {
-                            Log.v("ERROR", "ERROR");
+                            pDialog.dismiss();
+                            Toast.makeText(RegisterActivity.this, "You're already registered! Please Log In.", Toast.LENGTH_LONG).show();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
 
-            }.method(AQuery.METHOD_POST));//.header("secret_key ", SharedPreferencesMethod.getString(context, SharedPreferencesMethod.USER_TOKEN)));
+            }.method(AQuery.METHOD_POST));
 
         } catch (Exception e) {
             e.printStackTrace();
