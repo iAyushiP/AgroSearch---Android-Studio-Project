@@ -1,4 +1,5 @@
 package ap.efficient_farming;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,13 +18,15 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
-
+    private SessionHandler session;
+    private ProgressDialog pDialog;
     Button LoginButton;
     AutoCompleteTextView UserPhone, UserPassword;
     String BASE_URL = new URLs().URL_LOGIN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        session = new SessionHandler(getApplicationContext());
         setContentView(R.layout.activity_login);
         LoginButton = findViewById(R.id.LoginButton);
         UserPhone = findViewById(R.id.userNumber);
@@ -35,6 +38,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void displayLoader() {
+        pDialog = new ProgressDialog(LoginActivity.this);
+        pDialog.setMessage("Logging In.. Please wait...");
+        pDialog.setIndeterminate(false);
+        pDialog.setCancelable(false);
+        pDialog.show();
     }
     protected void AttemptLogin() {
         // Reset errors
@@ -63,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             focusView = UserPassword;
             cancel = true;
         }
-        if (!cancel) RegisterUser();
+        if (!cancel) LoginUser();
     }
     private boolean phone_invalid(String phone) {
         if(phone.length()!=10) return true;
@@ -73,7 +83,8 @@ public class LoginActivity extends AppCompatActivity {
         if(password.length()<6) return true;
         return false;
     }
-    private void RegisterUser() {
+    private void LoginUser() {
+        displayLoader();
         try {
             HashMap<String, String> param = new HashMap<>();
             param.put("phone", UserPhone.getText().toString().trim());
@@ -90,12 +101,16 @@ public class LoginActivity extends AppCompatActivity {
 
                     try {
                         if (json != null) {
+                            pDialog.dismiss();
                             JSONObject h = json.getJSONObject("success");
-
-                            Log.v("SUCCESS" ,h.getString("token") );
+                            String token = h.getString("token");
+                            Log.v("SUCCESS" , "TOKEN RECIEVED");
+                            session.loginUser(UserPhone.getText().toString().trim(), token);
                             Toast.makeText(LoginActivity.this, "You've been successfully logged in!", Toast.LENGTH_LONG).show();
                             mainActivity();
                         } else {
+                            pDialog.dismiss();
+                            Toast.makeText(LoginActivity.this, "Invalid Credentials!", Toast.LENGTH_SHORT).show();
                             Log.v("ERROR", "ERROR");
                         }
                     } catch (Exception e) {

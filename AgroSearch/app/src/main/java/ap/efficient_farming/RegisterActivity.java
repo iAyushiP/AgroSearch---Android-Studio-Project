@@ -121,7 +121,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Log.v("SUCCESS", "TOKEN GENERATED");
                             pDialog.dismiss();
                             Toast.makeText(RegisterActivity.this, "You've been successfully registered!", Toast.LENGTH_LONG).show();
-                            session.loginUser(UserPhone.getText().toString().trim(),UserName.getText().toString().trim(), token);
+                            session.loginUser(UserPhone.getText().toString().trim(), token);
                             mainActivity();
                         } else {
                             pDialog.dismiss();

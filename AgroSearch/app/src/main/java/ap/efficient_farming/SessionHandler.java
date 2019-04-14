@@ -23,9 +23,8 @@ public class SessionHandler {
     /**
      * Logs in the user by saving user details and setting session
      */
-    public void loginUser(String phone, String fullName, String token) {
+    public void loginUser(String phone, String token) {
         mEditor.putString(KEY_PHONE, phone);
-        mEditor.putString(KEY_FULL_NAME, fullName);
         mEditor.putString(KEY_TOKEN, token);
         Date date = new Date();
 
