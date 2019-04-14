@@ -91,10 +91,10 @@ public class RegisterActivity extends AppCompatActivity {
     private void RegisterUser() {
         try {
             HashMap<String, String> param = new HashMap<>();
-            param.put("name", UserName.getText().toString());
-            param.put("phone", UserPhone.getText().toString());
-            param.put("c_password", UserP.getText().toString());
-            param.put("password", UserC.getText().toString());
+            param.put("name", UserName.getText().toString().trim());
+            param.put("phone", UserPhone.getText().toString().trim());
+            param.put("c_password", UserP.getText().toString().trim());
+            param.put("password", UserC.getText().toString().trim());
 
             AQuery aq = new AQuery(this);
 
