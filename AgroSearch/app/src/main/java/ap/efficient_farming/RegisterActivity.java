@@ -86,7 +86,6 @@ public class RegisterActivity extends AppCompatActivity {
         if(password.length()<6) return true;
         return false;
     }
-
     private void displayLoader() {
         pDialog = new ProgressDialog(RegisterActivity.this);
         pDialog.setMessage("Signing Up.. Please wait...");
@@ -95,7 +94,6 @@ public class RegisterActivity extends AppCompatActivity {
         pDialog.show();
 
     }
-
     private void RegisterUser() {
         displayLoader();
         try {
