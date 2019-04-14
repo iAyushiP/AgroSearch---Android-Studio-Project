@@ -78,7 +78,34 @@
                 android:textColor="#ffffff"
                 android:textSize="12sp" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp">
 
+            <Button
+                android:id="@+id/AvailableFromTime"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:background="@drawable/button3"
+                android:padding="10dp"
+                android:text="Available From (Time)"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/AvailableToTime"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:background="@drawable/button3"
+                android:padding="10dp"
+                android:layout_marginLeft="15dp"
+                android:text="Available To (Time)"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+        </LinearLayout>
         <Spinner
             android:id="@+id/SpinnerList"
             android:layout_width="match_parent"

@@ -2,6 +2,7 @@ package ap.efficient_farming;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -22,6 +23,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -41,12 +43,13 @@ public class AddEquipment extends AppCompatActivity //implements AdapterView.OnI
             private String IMAGE_SELECTED="IMAGE SELECTED";
             URLs urlObject = new URLs();
             String BASE_URL = urlObject.URL_ADD_LISTING;
-            int fyear,fmonth,fday,tyear,tmonth,tday;
+            int fyear,fmonth,fday,tyear,tmonth,tday,hour1,minute1;
             Calendar calendar1,calendar2;
             DatePickerDialog datePickerDialog1,datePickerDialog2;
+            TimePickerDialog timePickerDialog1,timePickerDialog2;
     private Spinner spinnerType, spinnerMode,spinnerList,spinnerAdType;
     EditText ETitle, EDesc, ERate;
-    Button UploadImage, RegisterButton,availableFrom,availableTo;
+    Button UploadImage, RegisterButton,availableFrom,availableTo,availableFromTime,availableToTime;
     public static final int GET_FROM_GALLERY = 3;
     private static final String[] type = {"Select the equipment type..","Vehicles", "Irrigation Equipment", "Cultivation Tools", "Fertilization Tools","Consumables","Pest Control"};
     private static final String[] mode = {"Select pricing mode","per hour","per day","per week","per month"};
@@ -58,6 +61,8 @@ public class AddEquipment extends AppCompatActivity //implements AdapterView.OnI
         setContentView(R.layout.activity_add_equipment);
         availableFrom = (Button) findViewById(R.id.AvailableFrom);
         availableTo = (Button) findViewById(R.id.AvailableTo);
+        availableFromTime=(Button)findViewById(R.id.AvailableFromTime);
+        availableToTime=(Button)findViewById(R.id.AvailableToTime);
         ETitle = findViewById(R.id.EquipmentTitle);
         EDesc = findViewById(R.id.EquipmentDesc);
         ERate = findViewById(R.id.EquipmentRate);
@@ -80,7 +85,7 @@ public class AddEquipment extends AppCompatActivity //implements AdapterView.OnI
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                                 availableFrom.setText(day + "/" + (month + 1) + "/" + year);
                             }
-                        }, 0, 0, 0);
+                        }, 2019, 0, 0);
                 datePickerDialog1.show();
             }
         });
@@ -95,10 +100,40 @@ public class AddEquipment extends AppCompatActivity //implements AdapterView.OnI
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                                availableFrom.setText(day + "/" + (month + 1) + "/" + year);
+                                availableTo.setText(day + "/" + (month + 1) + "/" + year);
                             }
-                        }, 0, 0, 0);
+                        }, 2019, 0, 0);
                 datePickerDialog2.show();
+            }
+        });
+        availableFromTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calendar1=Calendar.getInstance();
+                hour1=calendar1.get(Calendar.HOUR_OF_DAY);
+                minute1=calendar1.get(Calendar.MINUTE);
+                timePickerDialog1=new TimePickerDialog(AddEquipment.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                                availableFromTime.setText(hour+":"+minute+":00");
+                            }
+                        },0,0,false);
+                timePickerDialog1.show();
+            }
+        });
+        availableToTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timePickerDialog2=new TimePickerDialog(AddEquipment.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                                availableToTime.setText(hour+":"+minute+":00");
+                            }
+                        },0,0,false);
+                timePickerDialog2.show();
+
             }
         });
         RegisterButton.setOnClickListener(new View.OnClickListener() {
