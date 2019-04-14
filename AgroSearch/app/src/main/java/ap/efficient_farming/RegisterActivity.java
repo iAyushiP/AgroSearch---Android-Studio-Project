@@ -2,6 +2,7 @@ package ap.efficient_farming;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -36,12 +37,56 @@ public class RegisterActivity extends AppCompatActivity {
         RegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if((UserP.getText().toString()).equals(UserC.getText().toString())) RegisterUser();
+                if((UserP.getText().toString()).equals(UserC.getText().toString())) AttemptRegisterUser();
                 else {
                     Toast.makeText(RegisterActivity.this, "Passwords do not match!", Toast.LENGTH_LONG).show();
                 }
             }
         });
+    }
+    protected void AttemptRegisterUser() {
+        // Reset errors
+        UserName.setError(null);
+        UserPhone.setError(null);
+        UserP.setError(null);
+
+        // Store values at the time of the login attempt.
+        String name = UserName.getText().toString();
+        String phone = UserPhone.getText().toString();
+        String password = UserP.getText().toString();
+        Boolean cancel=false;
+        View focusView = null;
+
+        // Check for a valid password, if the user entered one.
+        if (TextUtils.isEmpty(name)) {
+            UserName.setError(getString(R.string.error_empty_field));
+            focusView = UserName;
+            cancel = true;
+        }
+        else if(TextUtils.isEmpty(phone)) {
+            UserPhone.setError(getString(R.string.error_empty_field));
+            focusView = UserPhone;
+            cancel = true;
+        }
+        else if(phone_invalid(phone)) {
+            UserPhone.setError(getString(R.string.error_invalid_phone));
+            focusView = UserPhone;
+            cancel = true;
+        }
+        else if (!TextUtils.isEmpty(password)&&password_invalid(password)){
+            UserP.setError(getString(R.string.error_invalid_password));
+            focusView = UserP;
+            cancel = true;
+        }
+        if (!cancel) RegisterUser();
+    }
+    private boolean phone_invalid(String phone) {
+        if(phone.length()!=10) return true;
+        return false;
+    }
+    private boolean password_invalid(String password) {
+        if(password.length()<6) return true;
+        return false;
     }
     private void RegisterUser() {
         try {

@@ -1,6 +1,7 @@
 package ap.efficient_farming;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -28,6 +30,7 @@ import org.w3c.dom.Text;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class AddEquipment extends AppCompatActivity //implements AdapterView.OnItemSelectedListener
@@ -35,23 +38,66 @@ public class AddEquipment extends AppCompatActivity //implements AdapterView.OnI
             private String IMAGE_SELECTED="IMAGE SELECTED";
             URLs urlObject = new URLs();
             String BASE_URL = urlObject.URL_ADD_LISTING;
-    private Spinner spinnerType, spinnerMode;
+            int fyear,fmonth,fday,tyear,tmonth,tday;
+            Calendar calendar1,calendar2;
+            DatePickerDialog datePickerDialog1,datePickerDialog2;
+    private Spinner spinnerType, spinnerMode,spinnerList,spinnerAdType;
     EditText ETitle, EDesc, ERate;
-    Button UploadImage, RegisterButton;
+    Button UploadImage, RegisterButton,availableFrom,availableTo;
     public static final int GET_FROM_GALLERY = 3;
     private static final String[] type = {"Vehicles", "Irrigation Equipment", "Cultivation Tools", "Fertilization Tools","Consumables","Pest Control"};
-    private static final String[] mode = {"per hour","per day","per week","per month"};
+    private static final String[] mode = {"Hour","Day","Week","Month"};
+    private static final String[] list={"Share","Rent","Sell"};
+    private static final String[] AdType={"Normal","Featured","Boosted"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_equipment);
+        availableFrom=(Button)findViewById(R.id.AvailableFrom);
+        availableTo=(Button)findViewById(R.id.AvailableTo);
         ETitle = findViewById(R.id.EquipmentTitle);
         EDesc = findViewById(R.id.EquipmentDesc);
         ERate = findViewById(R.id.EquipmentRate);
         spinnerType = findViewById(R.id.typeSpinner);
         spinnerMode = findViewById(R.id.SpinnerMode);
+        spinnerList = findViewById(R.id.SpinnerList);
+        spinnerAdType = findViewById(R.id.SpinnerAdType);
         UploadImage = findViewById(R.id.UploadImage);
         RegisterButton = findViewById(R.id.RegisterEquipment);
+        availableFrom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calendar1=Calendar.getInstance();
+                fyear=calendar1.get(Calendar.YEAR);
+                fmonth=calendar1.get(Calendar.MONTH);
+                fday=calendar1.get(Calendar.DAY_OF_MONTH);
+                datePickerDialog1=new DatePickerDialog(AddEquipment.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                availableFrom.setText(day+"/"+(month+1)+"/"+year);
+                            }
+                        },0,0,0);
+          datePickerDialog1.show();
+            }
+        });
+        availableTo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calendar2=Calendar.getInstance();
+                tyear=calendar2.get(Calendar.YEAR);
+                tmonth=calendar2.get(Calendar.MONTH);
+                tday=calendar2.get(Calendar.DAY_OF_MONTH);
+                datePickerDialog2=new DatePickerDialog(AddEquipment.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                                availableFrom.setText(day+"/"+(month+1)+"/"+year);
+                            }
+                        },0,0,0);
+                datePickerDialog2.show();
+            }
+        });
         RegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,11 +114,22 @@ public class AddEquipment extends AppCompatActivity //implements AdapterView.OnI
                 R.layout.spinner_item, type);
         ArrayAdapter<String> adapterMode = new ArrayAdapter<String>(this,
                 R.layout.spinner_item, mode);
+        ArrayAdapter<String> adapterList = new ArrayAdapter<String>(this,
+                R.layout.spinner_item, list);
+        ArrayAdapter<String> adapterAdType = new ArrayAdapter<String>(this,
+                R.layout.spinner_item, AdType);
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterMode.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterAdType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerType.setAdapter(adapterType);
         spinnerMode.setAdapter(adapterMode);
+        spinnerList.setAdapter(adapterList);
+        spinnerAdType.setAdapter(adapterAdType);
         spinnerType.setSelection(0);
         spinnerMode.setSelection(0);
+        spinnerList.setSelection(0);
+        spinnerAdType.setSelection(0);
         //spinnerType.setOnItemSelectedListener(this);
         //spinnerMode.setOnItemSelectedListener(this);
             }
