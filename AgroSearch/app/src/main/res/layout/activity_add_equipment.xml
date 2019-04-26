@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,14 +9,15 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="35dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/transparent"
         android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
 
         <TextView
             android:id="@+id/textView"
@@ -27,7 +27,7 @@
             android:layout_marginBottom="5dp"
             android:gravity="center"
             android:text="ADD EQUIPMENT"
-            android:textColor="#80ffffff"
+            android:textColor="#85ffffff"
             android:textSize="20sp" />
 
         <EditText
@@ -39,90 +39,145 @@
             android:paddingStart="5dp"
             android:paddingTop="20dp"
             android:paddingBottom="15dp"
+            android:textColor="#ffffff"
             android:textColorHint="#ffffff"
             android:textSize="15sp" />
 
-        <LinearLayout
+        <Spinner
+            android:id="@+id/typeSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp">
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"></Spinner>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:paddingStart="5dp"
-                android:text="Equipment Type:"
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp">
+
+            <Button
+                android:id="@+id/AvailableFrom"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:background="@drawable/button2"
+                android:padding="10dp"
+                android:text="Available From"
                 android:textColor="#ffffff"
-                android:textSize="15sp" />
+                android:textSize="12sp" />
 
-            <Spinner
-                android:id="@+id/typeSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"></Spinner>
+            <Button
+                android:id="@+id/AvailableTo"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:background="@drawable/button2"
+                android:padding="10dp"
+                android:layout_marginLeft="15dp"
+                android:text="Available To"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp">
+
+            <Button
+                android:id="@+id/AvailableFromTime"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:background="@drawable/button3"
+                android:padding="10dp"
+                android:text="Available From (Time)"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/AvailableToTime"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:background="@drawable/button3"
+                android:padding="10dp"
+                android:layout_marginLeft="15dp"
+                android:text="Available To (Time)"
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+        </LinearLayout>
+        <Spinner
+            android:id="@+id/SpinnerList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"></Spinner>
+
+        <Spinner
+            android:id="@+id/SpinnerAdType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"></Spinner>
 
         <EditText
             android:id="@+id/EquipmentDesc"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/white_solid"
             android:gravity="top|start"
             android:hint="Description"
-            android:inputType="textLongMessage"
+            android:inputType="textLongMessage|textMultiLine"
+            android:maxLength="2000"
+            android:scrollHorizontally="false"
             android:paddingStart="5dp"
             android:paddingTop="5dp"
-            android:singleLine="true"
+            android:singleLine="false"
             android:scrollIndicators="end|right"
             android:scrollbars="vertical"
             android:textSize="15sp" />
 
 
         <EditText
+            android:id="@+id/EquipmentRate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:hint="Enter Rate (Select Mode Below)"
+            android:layout_margin="10dp"
+            android:hint="Enter rate"
             android:padding="10dp"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"
             android:textSize="15sp" />
 
         <Spinner
-            android:padding="10dp"
             android:id="@+id/SpinnerMode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            >
-        </Spinner>
+            android:layout_marginTop="5dp"
+            android:padding="10dp"></Spinner>
+
         <Button
             android:id="@+id/UploadImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="UPLOAD IMAGE"
-            android:textColor="#80101010"
+            android:background="@drawable/login_button"
+            android:textColor="#ffffff"
             android:textSize="15sp" />
+
         <Button
-            android:id="@+id/RegisterEquipment"
+            android:id="@+id/SubmitEquipment"
             android:layout_width="150dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/button"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/button2"
             android:text="SUBMIT"
             android:textColor="#ffffff"
             android:textSize="15sp" />
-        <LinearLayout
-            android:layout_width="349dp"
-            android:layout_height="0dp"
-            android:orientation="horizontal">
-
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>
 

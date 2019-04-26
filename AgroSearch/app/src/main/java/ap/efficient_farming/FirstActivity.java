@@ -11,18 +11,15 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 public class FirstActivity extends AppCompatActivity {
-
+        SessionHandler sessionHandler;
         Button LButton, RButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //FullScreen Code
-        /*requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getSupportActionBar().hide();
-        this.getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );*/
+        sessionHandler = new SessionHandler(getApplicationContext());
+        if(sessionHandler.isLoggedIn()) {
+            loadMainActivity();
+        }
         setContentView(R.layout.activity_first);
         LButton = (Button) findViewById(R.id.LButton);
         RButton = (Button) findViewById(R.id.RButton);
@@ -40,6 +37,10 @@ public class FirstActivity extends AppCompatActivity {
                 startActivity(i2);
             }
         });
+    }
+    public void loadMainActivity() {
+        Intent intent = new Intent(FirstActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
 }
